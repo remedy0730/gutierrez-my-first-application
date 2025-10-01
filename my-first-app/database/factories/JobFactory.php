@@ -3,24 +3,18 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Employer;
+use App\Models\Job;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Job>
- */
 class JobFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Job::class;
+
     public function definition(): array
     {
         return [
-            'employer_id' => Employer::factory(), // each job gets an employer
             'title' => $this->faker->jobTitle(),
-            'salary' => $this->faker->numberBetween(30000, 120000),
+            'salary' => $this->faker->numberBetween(40000, 120000),
+            // employer_id is assigned in the seeder for better control
         ];
     }
 }

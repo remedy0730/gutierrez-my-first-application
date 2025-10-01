@@ -1,23 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Job; // Import the newly created Job Model
+use App\Models\Job; // Import the Job Model
 
 // Homepage
 Route::get('/', function () {
     return view('home');
 });
 
-// All Jobs
+// All Jobs (with eager loading + pagination)
 Route::get('/jobs', function () {
     return view('jobs', [
-        'jobs' => Job::all() // Use the static all() method from the Job Model
+        // Eager load employer + tags, paginate 10 per page
+        'jobs' => Job::with(['employer', 'tags'])->paginate(10)
     ]);
 });
 
-// Single Job - using a Route Wildcard
+// Single Job - using a Route Wildcard (with eager loading)
 Route::get('/jobs/{id}', function ($id) {
     return view('job', [
-        'job' => Job::find($id) // Use the static find() method from the Job Model
+        'job' => Job::with(['employer', 'tags'])->findOrFail($id)
     ]);
 });

@@ -16,22 +16,21 @@ class TagFactory extends Factory
      */
     public function definition(): array
     {
-        // Predefined job-related tags
-        $tags = [
-            'Remote',
-            'On-Site',
+        $tagList = [
             'Full-Time',
             'Part-Time',
+            'Remote',
+            'Onsite',
             'Contract',
             'Internship',
-            'Entry-Level',
-            'Senior',
             'Tech',
-            'Management',
+            'Marketing',
+            'Design',
+            'Management'
         ];
 
         return [
-            'name' => $this->faker->unique()->randomElement($tags),
+            'name' => $this->faker->unique()->randomElement($tagList),
         ];
     }
 }
