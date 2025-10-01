@@ -9,21 +9,17 @@ class Job extends Model
 {
     use HasFactory;
 
-    // Tell Laravel this model uses the "job_listings" table
     protected $table = 'job_listings';
 
-    // Allow mass assignment on these fields
-    protected $fillable = [
-        'title',
-        'salary',
-        'employer_id',
-    ];
-
-    /**
-     * A Job belongs to an Employer.
-     */
+    // Each Job belongs to an Employer
     public function employer()
     {
-        return $this->belongsTo(Employer::class);
+        return $this->belongsTo(\App\Models\Employer::class);
+    }
+
+    // Each Job can have many Tags (many-to-many)
+    public function tags()
+    {
+        return $this->belongsToMany(\App\Models\Tag::class, 'job_listing_tag', 'job_listing_id', 'tag_id');
     }
 }
