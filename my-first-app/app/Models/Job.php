@@ -2,47 +2,28 @@
 
 namespace App\Models;
 
-class Job
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Job extends Model
 {
-    /**
-     * Returns all hardcoded job listings.
-     * @return array
-     */
-    public static function all()
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Director',
-                'salary' => '$50,000'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Programmer',
-                'salary' => '$10,000'
-            ],
-            [
-                'id' => 3,
-                'title' => 'Teacher',
-                'salary' => '$40,000'
-            ],
-        ];
-    }
+    use HasFactory;
+
+    // Tell Laravel this model uses the "job_listings" table
+    protected $table = 'job_listings';
+
+    // Allow mass assignment on these fields
+    protected $fillable = [
+        'title',
+        'salary',
+        'employer_id',
+    ];
 
     /**
-     * Finds a single job by its ID. Aborts with a 404 if not found.
-     * @param int $id
-     * @return array
+     * A Job belongs to an Employer.
      */
-    public static function find($id)
+    public function employer()
     {
-        // Use Illuminate\Support\Arr::first to find the job by ID
-        $job = \Illuminate\Support\Arr::first(static::all(), fn($job) => $job['id'] == $id);
-
-        if (! $job) {
-            // Abort if the job is not found
-            abort(404);
-        }
-        return $job;
+        return $this->belongsTo(Employer::class);
     }
 }
