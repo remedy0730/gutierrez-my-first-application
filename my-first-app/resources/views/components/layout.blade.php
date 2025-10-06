@@ -39,7 +39,15 @@
                     {{ $heading ?? '' }}
                 </h1>
 
-                <div class="flex space-x-3">
+                <div class="flex space-x-3 items-center">
+                    <!-- Create Job Button (only visible on /jobs) -->
+                    @if(request()->is('jobs') || request()->is('jobs/*'))
+                        <a href="{{ route('jobs.create') }}" 
+                           class="px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg shadow hover:bg-indigo-700 transition">
+                            + Create Job
+                        </a>
+                    @endif
+
                     <a href="/" class="px-4 py-2 bg-gray-100 text-gray-800 font-medium rounded-lg shadow hover:bg-gray-200 border border-gray-300 transition">
                         Home
                     </a>
